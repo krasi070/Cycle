@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D8C1B98-70A2-4353-93C3-FD203CDEB434}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cycle</RootNamespace>
+    <AssemblyName>Cycle</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Args\AreaArgs.cs" />
+    <Compile Include="Args\MonsterArgs.cs" />
+    <Compile Include="Args\NewGameOptionsArgs.cs" />
+    <Compile Include="Args\PlayerArgs.cs" />
+    <Compile Include="Args\SaveFileArgs.cs" />
+    <Compile Include="Args\SavePointArgs.cs" />
+    <Compile Include="Core\Engine.cs" />
+    <Compile Include="Databases\AIDatabase.cs" />
+    <Compile Include="Databases\AreaDatabase.cs" />
+    <Compile Include="Databases\MonsterDatabase.cs" />
+    <Compile Include="GameFrames\NewGameOptions.cs" />
+    <Compile Include="GameFrames\MainMenu.cs" />
+    <Compile Include="Handlers\SaveFileHandler.cs" />
+    <Compile Include="Interfaces\IAIDatabase.cs" />
+    <Compile Include="Interfaces\IAreaDatabase.cs" />
+    <Compile Include="Interfaces\IClearable.cs" />
+    <Compile Include="Interfaces\IAccuracyHavable.cs" />
+    <Compile Include="Interfaces\IAccuracyUsable.cs" />
+    <Compile Include="Interfaces\IAilmentHavable.cs" />
+    <Compile Include="Interfaces\IArea.cs" />
+    <Compile Include="Interfaces\IArtificialIntelligence.cs" />
+    <Compile Include="Interfaces\IAttack.cs" />
+    <Compile Include="Interfaces\IAttackable.cs" />
+    <Compile Include="Interfaces\IAttacker.cs" />
+    <Compile Include="Interfaces\ICritHavable.cs" />
+    <Compile Include="Interfaces\IDamageDoable.cs" />
+    <Compile Include="Interfaces\IDefendable.cs" />
+    <Compile Include="Interfaces\IDrawable.cs" />
+    <Compile Include="Interfaces\IEngine.cs" />
+    <Compile Include="Interfaces\INewGameOptions.cs" />
+    <Compile Include="Interfaces\IFrame.cs" />
+    <Compile Include="Interfaces\IMainFrame.cs" />
+    <Compile Include="Interfaces\IMainMenu.cs" />
+    <Compile Include="Interfaces\IMenuHandler.cs" />
+    <Compile Include="Interfaces\IMonster.cs" />
+    <Compile Include="Interfaces\IGameObject.cs" />
+    <Compile Include="Interfaces\ILevelUpable.cs" />
+    <Compile Include="Interfaces\IMagicAttack.cs" />
+    <Compile Include="Interfaces\IMagicStealer.cs" />
+    <Compile Include="Interfaces\IMagicUser.cs" />
+    <Compile Include="Interfaces\IMonsterDatabase.cs" />
+    <Compile Include="Interfaces\IOptionsFrame.cs" />
+    <Compile Include="Interfaces\IPointHavable.cs" />
+    <Compile Include="Interfaces\IStatusFrame.cs" />
+    <Compile Include="Interfaces\IMovable.cs" />
+    <Compile Include="Interfaces\INormalAttack.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
+    <Compile Include="Interfaces\IUnit.cs" />
+    <Compile Include="Interfaces\ITalkable.cs" />
+    <Compile Include="Models\AIs\AI.cs" />
+    <Compile Include="Models\AIs\SimpleAI.cs" />
+    <Compile Include="Models\Areas\CrossroadArea.cs" />
+    <Compile Include="Models\Areas\OneWayOutArea.cs" />
+    <Compile Include="Models\Attacks\Attack.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\AccuracyBuffSpell.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\AttackBuffSpell.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\BuffMagic.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\BulletPunch.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Concentrate.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\GigaPunch.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\DefenseBuffSpell.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Harden.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Hawkeye.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Spectacle.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Trimour.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\WallMaker.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\ZoomPunch.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\DebuffMagic.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\MrInjection.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\HealMagic.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\SelfRegeneration.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Bloodsucker.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\LifeSteal.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\LifeStealSpell.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\MagicAttack.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\Photosynthesis.cs" />
+    <Compile Include="Models\Attacks\MagicAttacks\SunEnergy.cs" />
+    <Compile Include="Models\Attacks\NormalAttacks\FierceBite.cs" />
+    <Compile Include="Models\Attacks\NormalAttacks\NormalAttack.cs" />
+    <Compile Include="Models\Attacks\NormalAttacks\Punch.cs" />
+    <Compile Include="Models\Attacks\NormalAttacks\Tackle.cs" />
+    <Compile Include="Enums\Option.cs" />
+    <Compile Include="Enums\StatusAilment.cs" />
+    <Compile Include="GameFrames\MonsterStatusFrame.cs" />
+    <Compile Include="GameFrames\SimpleGameFrame.cs" />
+    <Compile Include="GameFrames\MainFrame.cs" />
+    <Compile Include="GameFrames\OptionsFrame.cs" />
+    <Compile Include="GameFrames\StatusFrame.cs" />
+    <Compile Include="Models\GameObject.cs" />
+    <Compile Include="Handlers\MenuHandler.cs" />
+    <Compile Include="Models\Units\Monsters\FourFaceSteve.cs" />
+    <Compile Include="Models\Units\Monsters\KingOfSmiles.cs" />
+    <Compile Include="Models\Units\Monsters\Monster.cs" />
+    <Compile Include="Models\Units\Monsters\TheSmallFacedCat.cs" />
+    <Compile Include="Models\Units\Player.cs" />
+    <Compile Include="Models\Units\Unit.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
