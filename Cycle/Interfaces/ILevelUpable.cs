@@ -2,6 +2,6 @@
 {
     public interface ILevelUpable
     {
-        int Level { get; }
+        int Level { get; set; }
     }
 }

@@ -39,8 +39,7 @@
                 KingOfSmilesEXPReward,
                 MakeInBattleSprite())
         {
-            this.SubjectPronoun = "He";
-            this.ReflexivePronoun = "Himself";
+            this.SetStatsForAppropriateLevel();
         }
 
         public override void Draw()
@@ -83,6 +82,11 @@
             kingOfSmiles[12] = " \\______________/ ";
 
             return kingOfSmiles;
+        }
+
+        protected override void SetStatsForAppropriateLevel()
+        {
+            throw new NotImplementedException();
         }
     }
 }

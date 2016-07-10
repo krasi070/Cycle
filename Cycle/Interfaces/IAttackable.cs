@@ -2,7 +2,7 @@
 {
     public interface IAttackable
     {
-        int MaxHP { get; }
+        int MaxHP { get; set; }
 
         // Hit(Health) Points
         int HP { get; set; }

@@ -71,7 +71,7 @@
         // TODO: Add all available monsters
         private void AddMonsters()
         {
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 3; i++)
             {
                 this.monstersByLevel.Add(i, new List<IMonster>());
                 var smallFacedCat = new TheSmallFacedCat(0, 0, i);

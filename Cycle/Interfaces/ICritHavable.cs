@@ -2,7 +2,7 @@
 {
     public interface ICritHavable
     {
-        int CriticalChance { get; }
+        int CriticalChance { get; set; }
 
         int BattleCriticalChance { get; set; }
     }

@@ -13,6 +13,7 @@
             string path, 
             IPlayer player,
             IArea area,
+            int areaNumber,
             int savePointX,
             int savePointY,
             IMonster monster = null)
@@ -44,6 +45,7 @@
                 writer.WriteLine(player.MagicAttacks.Count > 4 ? player.MagicAttacks[4].GetType().Name : "-");
                 writer.WriteLine(player.MagicAttacks.Count > 5 ? player.MagicAttacks[5].GetType().Name : "-");
                 writer.WriteLine(area.GetType().Name);
+                writer.Write(areaNumber);
                 writer.Write(savePointX);
                 writer.Write(savePointY);
                 if (monster != null)

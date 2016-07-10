@@ -72,7 +72,7 @@
                 return this.level;
             }
 
-            protected set
+            set
             {
                 if (value < 0)
                 {
@@ -90,7 +90,7 @@
                 return this.maxHP;
             }
 
-            protected set
+            set
             {
                 if (value < 0)
                 {
@@ -184,7 +184,7 @@
                 return this.maxDamage;
             }
 
-            protected set
+            set
             {
                 if (value < 0)
                 {
@@ -250,7 +250,7 @@
                 return this.maxDefense;
             }
 
-            protected set
+            set
             {
                 if (value < 0)
                 {
@@ -316,7 +316,7 @@
                 return this.maxAccuracy;
             }
 
-            protected set
+            set
             {
                 if (value < 0)
                 {
@@ -388,7 +388,7 @@
                 return this.criticalChance;
             }
 
-            protected set
+            set
             {
                 if (value < 0)
                 {
@@ -427,10 +427,6 @@
                 this.battleCriticalChance = value;
             }
         }
-
-        public string SubjectPronoun { get; protected set; }
-
-        public string ReflexivePronoun { get; protected set; }
 
         public StatusAilment Ailment { get; set; }
 
@@ -536,44 +532,6 @@
                 this.CanActThisTurn = true;
                 this.CanUseMagic = true;
                 this.CanUsePhysicalAttack = true;
-            }
-        }
-
-        protected void LevelUp()
-        {
-            if (this.Level % 2 == 0)
-            {
-                this.MaxHP += 5;
-                this.MaxMP += 7;
-                this.MaxDamage += 3;
-                this.MaxDefense += 2;
-                this.CriticalChance++;
-                this.MaxAccuracy++;
-            }
-            else
-            {
-                this.MaxHP += 4;
-                this.MaxMP += 5;
-                this.MaxDamage += 4;
-                this.MaxDefense += 4;
-                this.MaxAccuracy += 2;
-            }
-
-            bool haveBonus = Random.Next(1, 101) > 90;
-            if (haveBonus)
-            {
-                this.MaxHP++;
-                this.MaxMP++;
-                this.MaxDamage++;
-                this.MaxDefense++;
-            }
-        }
-
-        protected void IncreaseStatusForAppropriateLevel(int previousLevel, int newLevel)
-        {
-            for (int i = previousLevel; i < newLevel; i++)
-            {
-                this.LevelUp();
             }
         }
 

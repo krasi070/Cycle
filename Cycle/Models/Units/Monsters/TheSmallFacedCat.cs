@@ -10,36 +10,13 @@
     public class TheSmallFacedCat : Monster
     {
         private const string TheSmallFacedCatName = "Meow-san the Small-Faced Cat";
-        private const int TheSmallFacedCatHealth = 38;
-        private const int TheSmallFacedCatMP = 0;
-        private const int TheSmallFacedCatDamage = 5;
-        private const int TheSmallFacedCatDefense = 1;
-        private const int TheSmallFacedCatAccuracy = 90;
-        private const int TheSmallFacedCatCriticalChance = 10;
         private const int TheSmallFacedCatPointsReward = 1;
 
-        public TheSmallFacedCat(
-            int x, 
-            int y,
-            int level)
-            : base(
-            TheSmallFacedCatName,
-            x,
-            y, 
-            TheSmallFacedCatHealth, 
-            TheSmallFacedCatMP,
-            TheSmallFacedCatDamage,
-            TheSmallFacedCatDefense, 
-            TheSmallFacedCatAccuracy,
-            TheSmallFacedCatCriticalChance, 
-            level,
-            PutNormalAttacks(),
-            PutMagicAttacks(),
-            TheSmallFacedCatPointsReward,
-            MakeInBattleSprite())
+        public TheSmallFacedCat(int x, int y, int level)
+            : base(TheSmallFacedCatName, x, y, 0, 0, 0, 0, 0, 0, level, PutNormalAttacks(), 
+            PutMagicAttacks(), TheSmallFacedCatPointsReward, MakeInBattleSprite())
         {
-            this.SubjectPronoun = "It";
-            this.ReflexivePronoun = "Itself";
+            this.SetStatsForAppropriateLevel();
         }
 
         public override void Draw()
@@ -109,6 +86,32 @@
             };
 
             return magicAttacks;
+        }
+
+        protected override void SetStatsForAppropriateLevel()
+        {
+            if (this.Level == 1)
+            {
+                this.MaxHP = 30;
+                this.MaxMP = 10;
+                this.MaxDamage = 10;
+                this.MaxDefense = 25;
+                this.MaxAccuracy = 96;
+                this.CriticalChance = 3;
+            }
+            else if (this.Level == 2)
+            {
+                this.MaxHP = 120;
+                this.MaxMP = 50;
+                this.MaxDamage = 30;
+                this.MaxDefense = 80;
+                this.MaxAccuracy = 108;
+                this.CriticalChance = 5;
+            }
+            else
+            {
+                throw new ArgumentException("The Samll-Faced Cat allowed levels: 1, 2");
+            }
         }
     }
 }

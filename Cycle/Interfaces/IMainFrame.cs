@@ -1,8 +1,40 @@
 ﻿namespace Cycle.Interfaces
 {
+    using System;
+
     public interface IMainFrame : IFrame
     {
         void ShowStatus(IPlayer player, IOptionsFrame optionsFrame);
+
+        void ShowIncreaseStatusScreen(IPlayer player);
+
+        void UpdatePointCounter(IPlayer player);
+
+        void UpdateHPBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false);
+
+        void UpdateMPBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false);
+
+        void UpdateAttackBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false);
+
+        void UpdateDefenseBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false);
+
+        void UpdateAccuracyBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false);
+
+        void UpdateCriticalChanceBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false);
+
+        void LightUpHPBar(IPlayer player);
+
+        void LightUpMPBar(IPlayer player);
+
+        void LightUpAttackBar(IPlayer player);
+
+        void LightUpDefenseBar(IPlayer player);
+
+        void LightUpAccuracyBar(IPlayer player);
+
+        void LightUpCriticalChanceBar(IPlayer player);
+
+        void LightUpBackButtonInIncreaseStatusScreen(IPlayer player);
 
         void LightUpBackButton(IPlayer player);
 

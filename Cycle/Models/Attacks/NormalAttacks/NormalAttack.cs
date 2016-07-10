@@ -61,7 +61,7 @@
                 {
                     message[1] = string.Format(
                         "But {0} lost {1} HP because of the kickback.",
-                        user.SubjectPronoun.ToLower(),
+                        user.Name,
                         this.Kickback);
                 }
 

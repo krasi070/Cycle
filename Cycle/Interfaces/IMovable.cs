@@ -7,6 +7,6 @@
     {
         void Move(ConsoleKey direction);
 
-        void Move(ConsoleKey direction, IList<int> borders);
+        void Move(ConsoleKey direction, IList<IPoint2D> borders);
     }
 }

@@ -1,18 +1,10 @@
 ﻿namespace Cycle.GameFrames
 {
     using System;
-    using Enums;
     using Interfaces;
 
     public class MainMenu : IMainMenu
     {
-        public MainMenu()
-        {
-            this.CurrentOption = Option.First;
-        }
-
-        public Option CurrentOption { get; set; }
-
         public void DisplayTitle()
         {
             Console.Clear();

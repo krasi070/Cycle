@@ -111,7 +111,7 @@
             }
             else
             {
-                message[1] = string.Format("But {0} missed.", user.SubjectPronoun.ToLower());
+                message[1] = string.Format("But {0} missed.", user.Name);
             }
 
             if (this.Ailment != DefaultAilment)

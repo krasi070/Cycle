@@ -8,13 +8,6 @@
 
     public class Player : Unit, IPlayer
     {
-        private const int PlayerHP = 23;
-        private const int PlayerMP = 10;
-        private const int PlayerDamage = 12;
-        private const int PlayerDefense = 8;
-        private const int PlayerAccuracy = 95;
-        private const int PlayerCriticalChance = 2;
-
         private int magicRobbers;
         private int points;
 
@@ -25,6 +18,12 @@
             int level,
             int points,
             int magicRobbers,
+            int hp,
+            int mp,
+            int damage,
+            int defense,
+            int accuracy,
+            int critChance,
             IList<INormalAttack> normalAttacks, 
             IList<IMagicAttack> magicAttacks,
             ConsoleColor color = ConsoleColor.White)
@@ -32,12 +31,12 @@
             name,
             x,
             y, 
-            PlayerHP,
-            PlayerMP, 
-            PlayerDamage, 
-            PlayerDefense,
-            PlayerAccuracy,
-            PlayerCriticalChance,
+            hp,
+            mp, 
+            damage, 
+            defense,
+            accuracy,
+            critChance,
             level,
             normalAttacks,
             magicAttacks,
@@ -47,8 +46,6 @@
             this.Points = points;
             this.MagicRobbers = magicRobbers;
             this.Option = Option.First;
-            this.SubjectPronoun = "You";
-            this.ReflexivePronoun = "Yourself";
         }
 
         public int Points
@@ -135,7 +132,7 @@
             }
         }
 
-        public void Move(ConsoleKey direction, IList<int> borders)
+        public void Move(ConsoleKey direction, IList<IPoint2D> borders)
         {
             if (!this.IsInBattle)
             {
@@ -165,13 +162,13 @@
             }
         }
 
-        private void MoveUp(IList<int> borders = null)
+        private void MoveUp(IList<IPoint2D> borders = null)
         {
             if (borders != null)
             {
-                for (int i = 0; i < borders.Count; i += 2)
+                for (int i = 0; i < borders.Count; i++)
                 {
-                    if (this.X == borders[i] && this.Y - 1 == borders[i + 1])
+                    if (this.X == borders[i].X && this.Y - 1 == borders[i].Y)
                     {
                         return;
                     }
@@ -184,13 +181,13 @@
             }
         }
 
-        private void MoveDown(IList<int> borders = null)
+        private void MoveDown(IList<IPoint2D> borders = null)
         {
             if (borders != null)
             {
-                for (int i = 0; i < borders.Count; i += 2)
+                for (int i = 0; i < borders.Count; i++)
                 {
-                    if (this.X == borders[i] && this.Y + 1 == borders[i + 1])
+                    if (this.X == borders[i].X && this.Y + 1 == borders[i].Y)
                     {
                         return;
                     }
@@ -203,13 +200,13 @@
             }
         }
 
-        private void MoveRight(IList<int> borders = null)
+        private void MoveRight(IList<IPoint2D> borders = null)
         {
             if (borders != null)
             {
-                for (int i = 0; i < borders.Count; i += 2)
+                for (int i = 0; i < borders.Count; i++)
                 {
-                    if (this.X + 1 == borders[i] && this.Y == borders[i + 1])
+                    if (this.X + 1 == borders[i].X && this.Y == borders[i].Y)
                     {
                         return;
                     }
@@ -223,13 +220,13 @@
             
         }
 
-        private void MoveLeft(IList<int> borders = null)
+        private void MoveLeft(IList<IPoint2D> borders = null)
         {
             if (borders != null)
             {
-                for (int i = 0; i < borders.Count; i += 2)
+                for (int i = 0; i < borders.Count; i++)
                 {
-                    if (this.X - 1 == borders[i] && this.Y == borders[i + 1])
+                    if (this.X - 1 == borders[i].X && this.Y == borders[i].Y)
                     {
                         return;
                     }

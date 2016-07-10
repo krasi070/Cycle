@@ -4,22 +4,22 @@
 
     public interface IArea : IDrawable
     {
-        IList<int> SpawningPoints { get; }
+        IList<IPoint2D> SpawningPoints { get; }
 
-        IList<int> BorderCoordinates { get; }
+        IList<IPoint2D> BorderCoordinates { get; }
 
-        IList<int> ShopCoordinates { get; }
+        IList<IPoint2D> ShopCoordinates { get; }
 
-        IList<int> SavePointCoordinates { get; }
+        IList<IPoint2D> SavePointCoordinates { get; }
 
-        IList<int> ExitAreaPointsUp { get; }
+        IList<IPoint2D> ExitAreaPointsUp { get; }
 
-        IList<int> ExitAreaPointsDown { get; }
+        IList<IPoint2D> ExitAreaPointsDown { get; }
 
-        IList<int> ExitAreaPointsRight { get; }
+        IList<IPoint2D> ExitAreaPointsRight { get; }
 
-        IList<int> ExitAreaPointsLeft { get; }
+        IList<IPoint2D> ExitAreaPointsLeft { get; }
 
-        IList<int> PlayerStartPoints { get; }
+        IList<IPoint2D> PlayerStartPoints { get; }
     }
 }

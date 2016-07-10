@@ -38,11 +38,10 @@
             defense, 
             accuracy,
             criticalChance,
-            level, 
+            level,
             normalAttacks, 
             magicAttacks)
         {
-            this.IncreaseStatusForAppropriateLevel(1, level);
             this.PointsReward = pointsReward;
             this.OutOfBattleSprite = DefaultOutOfBattleSprite;
             this.InBattleSprite = inBattleSprite;
@@ -93,5 +92,7 @@
             Console.SetCursorPosition(this.X, this.Y);
             Console.Write(" ");
         }
+
+        protected abstract void SetStatsForAppropriateLevel();
     }
 }

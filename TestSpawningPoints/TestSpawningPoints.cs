@@ -9,83 +9,40 @@
         {
             ResetBuffer();
             Console.CursorVisible = false;
-            DrawCrossroad();
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(50, 12);
-            Console.Write("S");
-            Console.SetCursorPosition(70, 12);
-            Console.Write("S");
-            Console.SetCursorPosition(70, 13);
-            Console.Write("S");
-            Console.SetCursorPosition(50, 8);
-            Console.Write("S");
-            Console.SetCursorPosition(33, 11);
-            Console.Write("S");
-            Console.SetCursorPosition(23, 10);
-            Console.Write("S");
-            Console.SetCursorPosition(21, 13);
-            Console.Write("S");
-            Console.SetCursorPosition(40, 13);
-            Console.Write("S");
-            Console.SetCursorPosition(45, 15);
-            Console.Write("S");
-            Console.SetCursorPosition(70, 10);
-            Console.Write("S");
-            // 44 9
-            Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(44, 9);
-            Console.Write("shop");
-            // 60 12
-            Console.SetCursorPosition(60, 12);
-            Console.Write("S");
-            Console.SetCursorPosition(46, 12);
-            Console.Write("S");
-            Console.SetCursorPosition(39, 8);
-            Console.Write("S");
+            Draw();
+            string[] sprite =
+            {
+                " /\\   /\\",
+                "//\\\\_//\\\\     ____",
+                "\\_     _/    /   /",
+                " / * * \\    /^^^]",
+                " \\_\\o/_/    [   ]",
+                "  /   \\_    [   /",
+                "  \\     \\_  /  /",
+                "  [ [  /  \\/ _/",
+                " _[ [  \\  /_/"
+            };
 
-            Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.SetCursorPosition(MainFrame.StartWidth + 29, MainFrame.StartHeight + 1);
-            Console.Write(new string(' ', 23));
-            
-            Console.SetCursorPosition(MainFrame.StartWidth + 29, MainFrame.StartHeight + 13);
-            Console.Write(new string(' ', 23));
-            Console.SetCursorPosition(MainFrame.StartWidth + 1, MainFrame.StartHeight + 5);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 1, MainFrame.StartHeight + 6);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 1, MainFrame.StartHeight + 7);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 1, MainFrame.StartHeight + 8);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 1, MainFrame.StartHeight + 9);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 78, MainFrame.StartHeight + 5);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 78, MainFrame.StartHeight + 6);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 78, MainFrame.StartHeight + 7);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 78, MainFrame.StartHeight + 8);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 78, MainFrame.StartHeight + 9);
-            Console.Write(" ");
-
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(46, MainFrame.StartHeight + 2);
-            Console.Write(" ");
-            Console.SetCursorPosition(46, MainFrame.EndHeight - 2);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 77, MainFrame.StartHeight + 7);
-            Console.Write(" ");
-            Console.SetCursorPosition(MainFrame.StartWidth + 2, MainFrame.StartHeight + 7);
-            Console.Write(" ");
+            int startWidth = MainFrame.StartWidth + 22;
+            int startHeight = MainFrame.StartHeight + 3;
+            for (int i = startHeight; i < startHeight + sprite.Length; i++)
+            {
+                Console.SetCursorPosition(startWidth, i);
+                Console.Write(sprite[i - startHeight]);
+            }
 
             while (true)
             {
                 
             }
+        }
+
+        private static void Draw()
+        {
+            var main = new MainFrame();
+            main.Draw();
+            var status = new MonsterStatusFrame();
+            status.Draw();
         }
 
         private static void DrawOneWayOut()

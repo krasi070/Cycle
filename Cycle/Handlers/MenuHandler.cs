@@ -8,6 +8,14 @@
     {
         private const string BackButtonMessage = "Return to battle.";
         private const string NoMagicRobbersMessage = "{0} doesn't have any magic robbers.";
+        private const string IncreaseHP = "Increase HP.";
+        private const string IncreaseMP = "Increase MP.";
+        private const string IncreaseAttack = "Increase attack power.";
+        private const string IncreaseDefense = "Increase defense.";
+        private const string IncreaseAccuracy = "Increase accuracy.";
+        private const string IncreaseCritChance = "Increase critical chance.";
+        private const string CloseStatusMenuMessage = "Close status menu.";
+        private const string NotEnoughPointsMessage = "Not enough points.";
 
         private readonly IMainMenu mainMenu;
         private readonly IMainFrame mainFrame;
@@ -29,7 +37,9 @@
             this.monsterStatusFrame = monsterStatusFrame;
         }
 
-        public void ShowMainMenu()
+        private Option Option { get; set; }
+
+        public void DisplayMainMenu()
         {
             this.mainMenu.DisplayTitle();
             this.mainMenu.DisplayOptions();
@@ -55,6 +65,12 @@
             this.playerStatusFrame.Draw();
         }
 
+        public void DisplayIncreaseStatusScreen(IPlayer player)
+        {
+            this.mainFrame.ClearInside();
+            this.mainFrame.ShowIncreaseStatusScreen(player);
+        }
+
         public void DisplayOptionsBox()
         {
             this.optionsFrame.Draw();
@@ -65,14 +81,49 @@
             this.playerStatusFrame.Update(player);
         }
 
-        public void ShowMonster(IMonster monster)
+        public void UpdatePointsInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdatePointCounter(player);
+        }
+
+        public void UpdateHPBarInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdateHPBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void UpdateMPBarInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdateMPBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void UpdateAttackBarInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdateAttackBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void UpdateDefenseBarInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdateDefenseBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void UpdateAccuracyBarInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdateAccuracyBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void UpdateCritChanceBarInIncreaseScreen(IPlayer player)
+        {
+            this.mainFrame.UpdateCriticalChanceBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void DisplayMonster(IMonster monster)
         {
             this.mainFrame.ClearInside();
             monster.Draw();
             this.monsterStatusFrame.Update(monster);
         }
 
-        public void ShowArea(IArea area, IPlayer player, IMonster monster = null)
+        public void DisplayArea(IArea area, IPlayer player, IMonster monster = null)
         {
             this.mainFrame.ClearInside();
             area.Draw();
@@ -103,7 +154,7 @@
             if (player.MagicRobbers > 0)
             {
                 this.mainFrame.ClearInside();
-                this.ShowMagicRobbingMessage(player, monster);
+                this.ShowMagicRobbingMessage(monster);
 
                 this.mainFrame.ShowMagicChoiceMenu(monster);
             }
@@ -130,233 +181,226 @@
             this.monsterStatusFrame.Update(unit);
         }
 
-        public Option ChooseMainMenuOption(ConsoleKey pressedKey)
+        public Option ChooseMainMenuOption()
         {
-            switch (this.mainMenu.CurrentOption)
+            this.Option = Option.First;
+            ConsoleKey pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
             {
-                case Option.First:
-                    switch (pressedKey)
-                    {
-                        case ConsoleKey.W:
-                        case ConsoleKey.UpArrow:
-                            this.mainMenu.CurrentOption = Option.Third;
-                            break;
-                        case ConsoleKey.S:
-                        case ConsoleKey.DownArrow:
-                            this.mainMenu.CurrentOption = Option.Second;
-                            break;
-                    }
-                    break;
-                case Option.Second:
-                    switch (pressedKey)
-                    {
-                        case ConsoleKey.W:
-                        case ConsoleKey.UpArrow:
-                            this.mainMenu.CurrentOption = Option.First;
-                            break;
-                        case ConsoleKey.S:
-                        case ConsoleKey.DownArrow:
-                            this.mainMenu.CurrentOption = Option.Third;
-                            break;
-                    }
-                    break;
-                case Option.Third:
-                    switch (pressedKey)
-                    {
-                        case ConsoleKey.W:
-                        case ConsoleKey.UpArrow:
-                            this.mainMenu.CurrentOption = Option.Second;
-                            break;
-                        case ConsoleKey.S:
-                        case ConsoleKey.DownArrow:
-                            this.mainMenu.CurrentOption = Option.First;
-                            break;
-                    }
-                    break;
-            }
-
-            this.LightUpCorrespondingMainMenuOption();
-
-            return this.mainMenu.CurrentOption;
-        }
-
-        public void ChooseMagicToRob(ConsoleKey pressedKey, IPlayer player, IUnit monster)
-        {
-            if (player.IsInBattle)
-            {
-                switch (player.Option)
+                switch (this.Option)
                 {
                     case Option.First:
                         this.MoveFromCurrentOption(
-                            Option.Fifth, 
-                            Option.Third, 
+                            Option.Third,
                             Option.Second, 
-                            Option.Second, 
-                            pressedKey,
-                            player);
+                            Option.First,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Second:
                         this.MoveFromCurrentOption(
-                            Option.Sixth, 
-                            Option.Fourth, 
-                            Option.First, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.First,
+                            Option.Third,
+                            Option.Second,
+                            Option.Second,
+                            pressedKey);
                         break;
                     case Option.Third:
                         this.MoveFromCurrentOption(
-                            Option.First, 
-                            Option.Fifth, 
-                            Option.Fourth, 
-                            Option.Fourth, 
-                            pressedKey,
-                            player);
+                            Option.Second,
+                            Option.First,
+                            Option.Third,
+                            Option.Third,
+                            pressedKey);
+                        break;
+                }
+
+                this.LightUpCorrespondingMainMenuOption();
+                pressedKey = Console.ReadKey(true).Key;
+            }
+
+            return this.Option;
+        }
+
+        public Option ChooseMagicToRob(IUnit monster)
+        {
+            this.Option = Option.First;
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
+            {
+                switch (this.Option)
+                {
+                    case Option.First:
+                        this.MoveFromCurrentOption(
+                            Option.Fifth,
+                            Option.Third,
+                            Option.Second,
+                            Option.Second,
+                            pressedKey);
+                        break;
+                    case Option.Second:
+                        this.MoveFromCurrentOption(
+                            Option.Sixth,
+                            Option.Fourth,
+                            Option.First,
+                            Option.First,
+                            pressedKey);
+                        break;
+                    case Option.Third:
+                        this.MoveFromCurrentOption(
+                            Option.First,
+                            Option.Fifth,
+                            Option.Fourth,
+                            Option.Fourth,
+                            pressedKey);
                         break;
                     case Option.Fourth:
                         this.MoveFromCurrentOption(
-                            Option.Second, 
-                            Option.Sixth, 
-                            Option.Third, 
-                            Option.Third, 
-                            pressedKey,
-                            player);
+                            Option.Second,
+                            Option.Sixth,
+                            Option.Third,
+                            Option.Third,
+                            pressedKey);
                         break;
                     case Option.Fifth:
                         this.MoveFromCurrentOption(
-                            Option.Third, 
-                            Option.First, 
-                            Option.Sixth, 
-                            Option.Sixth, 
-                            pressedKey,
-                            player);
+                            Option.Third,
+                            Option.First,
+                            Option.Sixth,
+                            Option.Sixth,
+                            pressedKey);
                         break;
                     case Option.Sixth:
                         this.MoveFromCurrentOption(
-                            Option.Fourth, 
-                            Option.Second, 
-                            Option.Fifth, 
-                            Option.Fifth, 
-                            pressedKey,
-                            player);
+                            Option.Fourth,
+                            Option.Second,
+                            Option.Fifth,
+                            Option.Fifth,
+                            pressedKey);
                         break;
                 }
 
-                this.LightUpCorrespondingMagicToRob(player, monster);
-                this.ShowMagicRobbingMessage(player, monster);
+                this.LightUpCorrespondingMagicToRob(monster);
+                this.ShowMagicRobbingMessage(monster);
+                pressedKey = Console.ReadKey(true).Key;
             }
+
+            return this.Option;
         }
 
-        public void ChooseBattleOption(ConsoleKey pressedKey, IPlayer player)
+        public Option ChooseBattleOption()
         {
-            if (player.IsInBattle)
+            this.Option = Option.First;
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
             {
-                switch (player.Option)
+                switch (this.Option)
                 {
                     case Option.First:
                         this.MoveFromCurrentOption(
-                            Option.Third, 
-                            Option.Third, 
-                            Option.Second, 
-                            Option.Second, 
-                            pressedKey,
-                            player);
+                            Option.Third,
+                            Option.Third,
+                            Option.Second,
+                            Option.Second,
+                            pressedKey);
                         break;
                     case Option.Second:
                         this.MoveFromCurrentOption(
-                            Option.Fourth, 
-                            Option.Fourth, 
-                            Option.First, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Fourth,
+                            Option.Fourth,
+                            Option.First,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Third:
                         this.MoveFromCurrentOption(
-                            Option.First, 
-                            Option.First, 
-                            Option.Fourth, 
-                            Option.Fourth, 
-                            pressedKey,
-                            player);
+                            Option.First,
+                            Option.First,
+                            Option.Fourth,
+                            Option.Fourth,
+                            pressedKey);
                         break;
                     case Option.Fourth:
                         this.MoveFromCurrentOption(
-                            Option.Second, 
-                            Option.Second, 
-                            Option.Third, 
-                            Option.Third, 
-                            pressedKey,
-                            player);
+                            Option.Second,
+                            Option.Second,
+                            Option.Third,
+                            Option.Third,
+                            pressedKey);
                         break;
                 }
 
-                this.LightCorrespondingBattleOption(player);
+                this.LightCorrespondingBattleOption();
+                pressedKey = Console.ReadKey(true).Key;
             }
+
+            return this.Option;
         }
 
-        public void ChooseNormalAttack(ConsoleKey pressedKey, IPlayer player)
+        public Option ChooseNormalAttack(IPlayer player)
         {
-            if (player.IsInBattle)
+            this.Option = Option.First;
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
             {
-                switch (player.Option)
+                switch (this.Option)
                 {
                     case Option.First:
                         this.MoveFromCurrentOption(
-                            Option.Third, 
-                            Option.Third, 
-                            Option.Second, 
-                            Option.Fifth, 
-                            pressedKey,
-                            player);
+                            Option.Third,
+                            Option.Third,
+                            Option.Second,
+                            Option.Fifth,
+                            pressedKey);
                         break;
                     case Option.Second:
                         this.MoveFromCurrentOption(
-                            Option.Fourth, 
-                            Option.Fourth, 
-                            Option.Fifth, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Fourth,
+                            Option.Fourth,
+                            Option.Fifth,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Third:
                         this.MoveFromCurrentOption(
-                            Option.First, 
-                            Option.First, 
-                            Option.Fourth, 
-                            Option.Fifth, 
-                            pressedKey,
-                            player);
+                            Option.First,
+                            Option.First,
+                            Option.Fourth,
+                            Option.Fifth,
+                            pressedKey);
                         break;
                     case Option.Fourth:
                         this.MoveFromCurrentOption(
-                            Option.Second, 
-                            Option.Second, 
-                            Option.Fifth, 
-                            Option.Third, 
-                            pressedKey,
-                            player);
+                            Option.Second,
+                            Option.Second,
+                            Option.Fifth,
+                            Option.Third,
+                            pressedKey);
                         break;
                     case Option.Fifth:
                         this.MoveFromCurrentOption(
-                            Option.Fifth, 
-                            Option.Fifth, 
-                            Option.First, 
-                            Option.Second, 
-                            pressedKey,
-                            player);
+                            Option.Fifth,
+                            Option.Fifth,
+                            Option.First,
+                            Option.Second,
+                            pressedKey);
                         break;
                 }
 
                 this.LightUpCorrespondingNormalAttack(player);
+                pressedKey = Console.ReadKey(true).Key;
             }
+
+            return this.Option;
         }
 
-        public void ChooseMagicAttack(ConsoleKey pressedKey, IPlayer player)
+        public Option ChooseMagicAttack(IPlayer player)
         {
-            if (player.IsInBattle)
+            this.Option = Option.First;
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
             {
-                switch (player.Option)
+                switch (this.Option)
                 {
                     case Option.First:
                         this.MoveFromCurrentOption(
@@ -364,213 +408,340 @@
                             Option.Fourth,
                             Option.Second,
                             Option.Seventh,
-                            pressedKey,
-                            player);
+                            pressedKey);
                         break;
                     case Option.Second:
                         this.MoveFromCurrentOption(
-                            Option.Fifth, 
-                            Option.Fifth, 
-                            Option.Third, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Fifth,
+                            Option.Fifth,
+                            Option.Third,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Third:
                         this.MoveFromCurrentOption(
-                            Option.Sixth, 
-                            Option.Sixth, 
-                            Option.Seventh, 
-                            Option.Second, 
-                            pressedKey,
-                            player);
+                            Option.Sixth,
+                            Option.Sixth,
+                            Option.Seventh,
+                            Option.Second,
+                            pressedKey);
                         break;
                     case Option.Fourth:
                         this.MoveFromCurrentOption(
-                            Option.First, 
-                            Option.First, 
-                            Option.Fifth, 
-                            Option.Seventh, 
-                            pressedKey,
-                            player);
+                            Option.First,
+                            Option.First,
+                            Option.Fifth,
+                            Option.Seventh,
+                            pressedKey);
                         break;
                     case Option.Fifth:
                         this.MoveFromCurrentOption(
-                            Option.Second, 
-                            Option.Second, 
-                            Option.Sixth, 
-                            Option.Fourth, 
-                            pressedKey,
-                            player);
+                            Option.Second,
+                            Option.Second,
+                            Option.Sixth,
+                            Option.Fourth,
+                            pressedKey);
                         break;
                     case Option.Sixth:
                         this.MoveFromCurrentOption(
-                            Option.Third, 
-                            Option.Third, 
-                            Option.Seventh, 
-                            Option.Fifth, 
-                            pressedKey,
-                            player);
+                            Option.Third,
+                            Option.Third,
+                            Option.Seventh,
+                            Option.Fifth,
+                            pressedKey);
                         break;
                     case Option.Seventh:
                         this.MoveFromCurrentOption(
-                            Option.Seventh, 
-                            Option.Seventh, 
-                            Option.First, 
-                            Option.Third, 
-                            pressedKey,
-                            player);
+                            Option.Seventh,
+                            Option.Seventh,
+                            Option.First,
+                            Option.Third,
+                            pressedKey);
                         break;
                 }
 
                 this.LightUpCorrespondingMagicAttack(player);
+                pressedKey = Console.ReadKey(true).Key;
             }
+
+            return this.Option;
         }
 
-        public void MoveInStatusOption(ConsoleKey pressedKey, IPlayer player)
+        public Option ChooseStatusOption(IPlayer player)
         {
             this.optionsFrame.ClearInside();
-
-            if (player.IsInBattle)
+            this.Option = Option.First;
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
             {
-                switch (player.Option)
+                switch (this.Option)
                 {
                     case Option.First:
                         this.MoveFromCurrentOption(
-                            Option.First, 
-                            Option.First, 
-                            Option.Fifth, 
-                            Option.Eleventh, 
-                            pressedKey,
-                            player);
+                            Option.First,
+                            Option.First,
+                            Option.Fifth,
+                            Option.Eleventh,
+                            pressedKey);
                         break;
                     case Option.Second:
                         this.MoveFromCurrentOption(
-                            Option.Fifth, 
-                            Option.Third, 
-                            Option.Sixth, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Fifth,
+                            Option.Third,
+                            Option.Sixth,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Third:
                         this.MoveFromCurrentOption(
-                            Option.Second, 
-                            Option.Fourth, 
-                            Option.Eighth, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Second,
+                            Option.Fourth,
+                            Option.Eighth,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Fourth:
                         this.MoveFromCurrentOption(
-                            Option.Third, 
-                            Option.Fifth, 
-                            Option.Eighth, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Third,
+                            Option.Fifth,
+                            Option.Eighth,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Fifth:
                         this.MoveFromCurrentOption(
-                            Option.Fourth, 
-                            Option.Second, 
-                            Option.Tenth, 
-                            Option.First, 
-                            pressedKey,
-                            player);
+                            Option.Fourth,
+                            Option.Second,
+                            Option.Tenth,
+                            Option.First,
+                            pressedKey);
                         break;
                     case Option.Sixth:
                         this.MoveFromCurrentOption(
-                            Option.Tenth, 
-                            Option.Eighth, 
-                            Option.Seventh, 
-                            Option.Second, 
-                            pressedKey,
-                            player);
+                            Option.Tenth,
+                            Option.Eighth,
+                            Option.Seventh,
+                            Option.Second,
+                            pressedKey);
                         break;
                     case Option.Seventh:
                         this.MoveFromCurrentOption(
-                            Option.Eleventh, 
-                            Option.Ninth, 
-                            Option.First, 
-                            Option.Sixth, 
-                            pressedKey,
-                            player);
+                            Option.Eleventh,
+                            Option.Ninth,
+                            Option.First,
+                            Option.Sixth,
+                            pressedKey);
                         break;
                     case Option.Eighth:
                         this.MoveFromCurrentOption(
-                            Option.Sixth, 
-                            Option.Tenth, 
-                            Option.Ninth, 
-                            Option.Third, 
-                            pressedKey,
-                            player);
+                            Option.Sixth,
+                            Option.Tenth,
+                            Option.Ninth,
+                            Option.Third,
+                            pressedKey);
                         break;
                     case Option.Ninth:
                         this.MoveFromCurrentOption(
-                            Option.Seventh, 
-                            Option.Eleventh, 
-                            Option.First, 
-                            Option.Eighth, 
-                            pressedKey,
-                            player);
+                            Option.Seventh,
+                            Option.Eleventh,
+                            Option.First,
+                            Option.Eighth,
+                            pressedKey);
                         break;
                     case Option.Tenth:
                         this.MoveFromCurrentOption(
-                            Option.Eighth, 
-                            Option.Sixth, 
-                            Option.Eleventh, 
-                            Option.Fifth, 
-                            pressedKey,
-                            player);
+                            Option.Eighth,
+                            Option.Sixth,
+                            Option.Eleventh,
+                            Option.Fifth,
+                            pressedKey);
                         break;
                     case Option.Eleventh:
                         this.MoveFromCurrentOption(
-                            Option.Ninth, 
-                            Option.Seventh, 
-                            Option.First, 
-                            Option.Tenth, 
-                            pressedKey,
-                            player);
+                            Option.Ninth,
+                            Option.Seventh,
+                            Option.First,
+                            Option.Tenth,
+                            pressedKey);
                         break;
                 }
 
                 this.LightUpCorrespondingStatusOption(player);
                 this.DisplayDescription(player);
+                pressedKey = Console.ReadKey(true).Key;
             }
+
+            return this.Option;
         }
 
-        public void ChooseYesOrNo(ConsoleKey pressedKey, IPlayer player)
+        public Option ChooseYesOrNo()
         {
-            switch (player.Option)
+            this.Option = Option.First;
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
+            {
+                switch (this.Option)
+                {
+                    case Option.First:
+                        this.MoveFromCurrentOption(
+                            Option.Second,
+                            Option.Second,
+                            Option.First,
+                            Option.First,
+                            pressedKey);
+                        break;
+                    case Option.Second:
+                        this.MoveFromCurrentOption(
+                            Option.First,
+                            Option.First,
+                            Option.Second,
+                            Option.Second,
+                            pressedKey);
+                        break;
+                }
+
+                this.LightUpYesOrNo();
+                pressedKey = Console.ReadKey(true).Key;
+            }
+
+            return this.Option;
+        }
+
+        public Option ChooseOptionInStatusIncreaseScreen(IPlayer player, Option currOption = Option.First)
+        {
+            this.Option = currOption;
+            this.LightUpCorrespondingStatus(player);
+            this.WriteCorrespondingDescription(player);
+            var pressedKey = Console.ReadKey(true).Key;
+            while (pressedKey != ConsoleKey.Enter)
+            {
+                switch (this.Option)
+                {
+                    case Option.First:
+                        this.MoveFromCurrentOption(
+                            Option.Sixth, 
+                            Option.Second, 
+                            Option.First, 
+                            Option.First, 
+                            pressedKey);
+                        break;
+                    case Option.Second:
+                        this.MoveFromCurrentOption(
+                            Option.First,
+                            Option.Third,
+                            Option.Second,
+                            Option.Second,
+                            pressedKey);
+                        break;
+                    case Option.Third:
+                        this.MoveFromCurrentOption(
+                            Option.Second,
+                            Option.Fourth,
+                            Option.Third,
+                            Option.Third,
+                            pressedKey);
+                        break;
+                    case Option.Fourth:
+                        this.MoveFromCurrentOption(
+                            Option.Third,
+                            Option.Fifth,
+                            Option.Fourth,
+                            Option.Fourth,
+                            pressedKey);
+                        break;
+                    case Option.Fifth:
+                        this.MoveFromCurrentOption(
+                            Option.Fourth,
+                            Option.Sixth,
+                            Option.Seventh,
+                            Option.Seventh,
+                            pressedKey);
+                        break;
+                    case Option.Sixth:
+                        this.MoveFromCurrentOption(
+                            Option.Fifth,
+                            Option.First,
+                            Option.Seventh,
+                            Option.Seventh,
+                            pressedKey);
+                        break;
+                    case Option.Seventh:
+                        this.MoveFromCurrentOption(
+                            Option.Seventh,
+                            Option.Seventh,
+                            Option.Sixth,
+                            Option.Sixth,
+                            pressedKey);
+                        break;
+                }
+
+                this.LightUpCorrespondingStatus(player);
+                this.WriteCorrespondingDescription(player);
+                pressedKey = Console.ReadKey(true).Key;
+            }
+
+            return this.Option;
+        }
+
+        private void LightUpCorrespondingStatus(IPlayer player)
+        {
+            switch (this.Option)
             {
                 case Option.First:
-                    this.MoveFromCurrentOption(
-                        Option.Second, 
-                        Option.Second, 
-                        Option.First, 
-                        Option.First, 
-                        pressedKey,
-                        player);
+                    this.mainFrame.LightUpHPBar(player);
                     break;
                 case Option.Second:
-                    this.MoveFromCurrentOption(
-                        Option.First, 
-                        Option.First, 
-                        Option.Second, 
-                        Option.Second, 
-                        pressedKey,
-                        player);
+                    this.mainFrame.LightUpMPBar(player);
+                    break;
+                case Option.Third:
+                    this.mainFrame.LightUpAttackBar(player);
+                    break;
+                case Option.Fourth:
+                    this.mainFrame.LightUpDefenseBar(player);
+                    break;
+                case Option.Fifth:
+                    this.mainFrame.LightUpAccuracyBar(player);
+                    break;
+                case Option.Sixth:
+                    this.mainFrame.LightUpCriticalChanceBar(player);
+                    break;
+                case Option.Seventh:
+                    this.mainFrame.LightUpBackButtonInIncreaseStatusScreen(player);
                     break;
             }
-
-            this.LightUpYesOrNo(player);
         }
 
-        private void LightUpYesOrNo(IPlayer player)
+        private void WriteCorrespondingDescription(IPlayer player)
         {
-            switch (player.Option)
+            switch (this.Option)
+            {
+                case Option.First:
+                    this.WriteText(player.Points > 0 ? IncreaseHP : NotEnoughPointsMessage);
+                    break;
+                case Option.Second:
+                    this.WriteText(player.Points > 0 ? IncreaseMP : NotEnoughPointsMessage);
+                    break;
+                case Option.Third:
+                    this.WriteText(player.Points > 0 ? IncreaseAttack : NotEnoughPointsMessage);
+                    break;
+                case Option.Fourth:
+                    this.WriteText(player.Points > 0 ? IncreaseDefense : NotEnoughPointsMessage);
+                    break;
+                case Option.Fifth:
+                    this.WriteText(player.Points > 0 ? IncreaseAccuracy : NotEnoughPointsMessage);
+                    break;
+                case Option.Sixth:
+                    this.WriteText(player.Points > 0 ? IncreaseCritChance : NotEnoughPointsMessage);
+                    break;
+                case Option.Seventh:
+                    this.WriteText(CloseStatusMenuMessage);
+                    break;
+            }
+        }
+
+        private void LightUpYesOrNo()
+        {
+            switch (this.Option)
             {
                 case Option.First:
                     this.optionsFrame.LightUpNoButton();
@@ -583,7 +754,7 @@
 
         private void LightUpCorrespondingMainMenuOption()
         {
-            switch (this.mainMenu.CurrentOption)
+            switch (this.Option)
             {
                 case Option.First:
                     this.mainMenu.LightUpNewGameButton();
@@ -599,7 +770,7 @@
 
         private void LightUpCorrespondingMagicAttack(IPlayer player)
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     this.optionsFrame.LightUpFirstMagicAttack(player);
@@ -627,7 +798,7 @@
 
         private void DisplayDescription(IPlayer player)
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     this.optionsFrame.WriteText(BackButtonMessage);
@@ -705,9 +876,9 @@
             }
         }
 
-        private void LightUpCorrespondingMagicToRob(IPlayer player, IUnit monster)
+        private void LightUpCorrespondingMagicToRob(IUnit monster)
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     this.mainFrame.LightUpFirstMagicToRob(monster);
@@ -732,7 +903,7 @@
 
         private void LightUpCorrespondingStatusOption(IPlayer player)
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     this.mainFrame.LightUpBackButton(player);
@@ -772,7 +943,7 @@
 
         private void LightUpCorrespondingNormalAttack(IPlayer player)
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     this.optionsFrame.LightUpFirstNormalAttack(player);
@@ -792,9 +963,9 @@
             }
         }
 
-        private void LightCorrespondingBattleOption(IPlayer player)
+        private void LightCorrespondingBattleOption()
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     this.optionsFrame.LightUpAttackOption();
@@ -813,9 +984,9 @@
             }
         }
 
-        private void ShowMagicRobbingMessage(IPlayer player, IUnit monster)
+        private void ShowMagicRobbingMessage(IUnit monster)
         {
-            switch (player.Option)
+            switch (this.Option)
             {
                 case Option.First:
                     if (monster.MagicAttacks.Count >= 1)
@@ -885,26 +1056,25 @@
             Option down,
             Option right,
             Option left,
-            ConsoleKey pressedKey,
-            IPlayer player)
+            ConsoleKey pressedKey)
         {
             switch (pressedKey)
             {
                 case ConsoleKey.W:
                 case ConsoleKey.UpArrow:
-                    player.Option = up;
+                    this.Option = up;
                     break;
                 case ConsoleKey.S:
                 case ConsoleKey.DownArrow:
-                    player.Option = down;
+                    this.Option = down;
                     break;
                 case ConsoleKey.D:
                 case ConsoleKey.RightArrow:
-                    player.Option = right;
+                    this.Option = right;
                     break;
                 case ConsoleKey.A:
                 case ConsoleKey.LeftArrow:
-                    player.Option = left;
+                    this.Option = left;
                     break;
             }
         }

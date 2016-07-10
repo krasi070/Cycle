@@ -51,11 +51,14 @@
     <Compile Include="Databases\AIDatabase.cs" />
     <Compile Include="Databases\AreaDatabase.cs" />
     <Compile Include="Databases\MonsterDatabase.cs" />
+    <Compile Include="Enums\ShopItem.cs" />
     <Compile Include="GameFrames\NewGameOptions.cs" />
     <Compile Include="GameFrames\MainMenu.cs" />
+    <Compile Include="Geometry\Point2D.cs" />
     <Compile Include="Handlers\SaveFileHandler.cs" />
     <Compile Include="Interfaces\IAIDatabase.cs" />
     <Compile Include="Interfaces\IAreaDatabase.cs" />
+    <Compile Include="Interfaces\IChooseOption.cs" />
     <Compile Include="Interfaces\IClearable.cs" />
     <Compile Include="Interfaces\IAccuracyHavable.cs" />
     <Compile Include="Interfaces\IAccuracyUsable.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Interfaces\ICritHavable.cs" />
     <Compile Include="Interfaces\IDamageDoable.cs" />
     <Compile Include="Interfaces\IDefendable.cs" />
+    <Compile Include="Interfaces\IDisplayer.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IEngine.cs" />
     <Compile Include="Interfaces\INewGameOptions.cs" />
@@ -83,6 +87,7 @@
     <Compile Include="Interfaces\IMagicUser.cs" />
     <Compile Include="Interfaces\IMonsterDatabase.cs" />
     <Compile Include="Interfaces\IOptionsFrame.cs" />
+    <Compile Include="Interfaces\IPoint2D.cs" />
     <Compile Include="Interfaces\IPointHavable.cs" />
     <Compile Include="Interfaces\IStatusFrame.cs" />
     <Compile Include="Interfaces\IMovable.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\IUnit.cs" />
     <Compile Include="Interfaces\ITalkable.cs" />
+    <Compile Include="Interfaces\IUpdater.cs" />
     <Compile Include="Models\AIs\AI.cs" />
     <Compile Include="Models\AIs\SimpleAI.cs" />
     <Compile Include="Models\Areas\CrossroadArea.cs" />
@@ -131,6 +137,8 @@
     <Compile Include="GameFrames\StatusFrame.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Handlers\MenuHandler.cs" />
+    <Compile Include="Models\SavePoint.cs" />
+    <Compile Include="Models\Units\Monsters\ChelTheFox.cs" />
     <Compile Include="Models\Units\Monsters\FourFaceSteve.cs" />
     <Compile Include="Models\Units\Monsters\KingOfSmiles.cs" />
     <Compile Include="Models\Units\Monsters\Monster.cs" />

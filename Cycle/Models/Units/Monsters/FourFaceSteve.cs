@@ -39,8 +39,7 @@
                 FourFaceSteveEXPReward,
                 MakeInBattleSprite())
         {
-            this.SubjectPronoun = "He";
-            this.ReflexivePronoun = "Himself";
+            this.SetStatsForAppropriateLevel();
         }
 
         public override void Draw()
@@ -82,6 +81,11 @@
             steve[11] = "             |---|  /     ";
 
             return steve;
+        }
+
+        protected override void SetStatsForAppropriateLevel()
+        {
+            throw new NotImplementedException();
         }
     }
 }

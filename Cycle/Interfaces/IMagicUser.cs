@@ -7,7 +7,7 @@
         // Magic(Mana) Points
         int MP { get; set; }
 
-        int MaxMP { get; }
+        int MaxMP { get; set; }
 
         IList<IMagicAttack> MagicAttacks { get; }
 

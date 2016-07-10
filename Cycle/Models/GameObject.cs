@@ -1,9 +1,10 @@
 ﻿namespace Cycle.Models
 {
     using System;
+    using Geometry;
     using Interfaces;
 
-    public abstract class GameObject : IGameObject
+    public abstract class GameObject : Point2D, IGameObject
     {
         private const ConsoleColor DefaultColor = ConsoleColor.White;
 
@@ -12,10 +13,9 @@
         private int y;
 
         protected GameObject(string name, int x, int y, ConsoleColor color = DefaultColor)
+            : base(x, y)
         {
             this.Name = name;
-            this.X = x;
-            this.Y = y;
             this.Color = color;
         }
 
@@ -36,42 +36,6 @@
                 }
 
                 this.name = value;
-            }
-        }
-
-        public int X
-        {
-            get
-            {
-                return this.x;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("X", "X coordinate cannot be negative.");
-                }
-
-                this.x = value;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return this.y;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException("Y", "Y coordinate cannot be negative.");
-                }
-
-                this.y = value;
             }
         }
 

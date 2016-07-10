@@ -4,6 +4,6 @@
     {
         int BattleAccuracy { get; set; }
 
-        int MaxAccuracy { get; }
+        int MaxAccuracy { get; set; }
     }
 }

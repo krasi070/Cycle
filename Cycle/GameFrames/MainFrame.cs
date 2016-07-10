@@ -12,12 +12,18 @@
         public static int EndHeight = 19;
         public static int Height = EndHeight - StartHeight;
 
+        private const int MaxPossiblePlayerHP = 1000;
+        private const int MaxPossiblePlayerMP = 1000;
+        private const int MaxPossiblePlayerATT = 1000;
+        private const int MaxPossiblePlayerDEF = 1000;
+        private const int MaxPossiblePlayerACC = 200;
+        private const int MaxPossiblePlayerCRIT = 100;
+
         private const string DefaultAttackName = "[Empty Slot]";
         private const string NormalType = "Normal";
         private const string MagicType = "Magic";
 
         // TODO: Add save file screen
-        // TODO: Add skill tree screen
         public MainFrame()
             : base(StartWidth, EndWidth, StartHeight, EndHeight)
         {
@@ -49,6 +55,337 @@
             Console.SetCursorPosition(StartWidth + 54, StartHeight + 2);
             Console.Write("Magic Attacks:");
             this.DisplayMagicAttacks(player);
+        }
+
+        public void ShowIncreaseStatusScreen(IPlayer player)
+        {
+            this.UpdatePointCounter(player);
+            this.UpdateHPBar(player);
+            this.UpdateMPBar(player);
+            this.UpdateAttackBar(player);
+            this.UpdateDefenseBar(player);
+            this.UpdateAccuracyBar(player);
+            this.UpdateCriticalChanceBar(player);
+            this.DisplayBackButtonInIncreaseStatusScreen();
+        }
+
+        public void UpdatePointCounter(IPlayer player)
+        {
+            Console.SetCursorPosition(StartWidth + 1, StartHeight + 1);
+            Console.Write("Points: {0}", player.Points);
+        }
+
+        public void UpdateHPBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(StartWidth + 5, StartHeight + 3);
+            int hpBarHalf = player.MaxHP % 20 / 10;
+            int hpBarFull = player.MaxHP / 20;
+            if (showNewValue)
+            {
+                if (hpBarHalf == 0 && hpBarFull < 50)
+                {
+                    hpBarHalf = 1;
+                }
+                else
+                {
+                    hpBarFull++;
+                    hpBarHalf = 0;
+                }
+            }
+
+            Console.Write(
+                "HP|{0}{1}{2}|",
+                new string(':', hpBarFull),
+                new string('.', hpBarHalf),
+                new string(' ', 50 - hpBarFull - hpBarHalf));
+
+            if (showNewValue)
+            {
+                if (player.MaxHP < MaxPossiblePlayerHP)
+                {
+                    Console.Write("   {0} -> {1}", player.MaxHP, player.MaxHP + 10);
+                }
+                else
+                {
+                    Console.Write("   MAX");
+                }
+            }
+            else
+            {
+                Console.Write(new string(' ', EndWidth - (StartWidth + 59)));
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void UpdateMPBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(StartWidth + 5, StartHeight + 5);
+            int mpBarHalf = player.MaxMP % 20 / 10;
+            int mpBarFull = player.MaxMP / 20;
+            if (showNewValue)
+            {
+                if (mpBarHalf == 0 && mpBarFull < 50)
+                {
+                    mpBarHalf = 1;
+                }
+                else
+                {
+                    mpBarFull++;
+                    mpBarHalf = 0;
+                }
+            }
+
+            Console.Write(
+                "MP|{0}{1}{2}|",
+                new string(':', mpBarFull),
+                new string('.', mpBarHalf),
+                new string(' ', 50 - mpBarFull - mpBarHalf));
+
+            if (showNewValue)
+            {
+                if (player.MaxMP < MaxPossiblePlayerMP)
+                {
+                    Console.Write("   {0} -> {1}", player.MaxMP, player.MaxMP + 10);
+                }
+                else
+                {
+                    Console.Write("   MAX");
+                }
+            }
+            else
+            {
+                Console.Write(new string(' ', EndWidth - (StartWidth + 59)));
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void UpdateAttackBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(StartWidth + 4, StartHeight + 7);
+            int attackBarHalf = player.MaxDamage % 20 / 10;
+            int attackBarFull = player.MaxDamage / 20;
+            if (showNewValue)
+            {
+                if (attackBarHalf == 0 && attackBarFull < 50)
+                {
+                    attackBarHalf = 1;
+                }
+                else
+                {
+                    attackBarFull++;
+                    attackBarHalf = 0;
+                }
+            }
+
+            Console.Write("ATT|{0}{1}{2}|",
+                new string(':', attackBarFull),
+                new string('.', attackBarHalf),
+                new string(' ', 50 - attackBarFull - attackBarHalf));
+
+            if (showNewValue)
+            {
+                if (player.MaxDamage < MaxPossiblePlayerATT)
+                {
+                    Console.Write("   {0} -> {1}", player.MaxDamage, player.MaxDamage + 10);
+                }
+                else
+                {
+                    Console.Write("   MAX");
+                }
+            }
+            else
+            {
+                Console.Write(new string(' ', EndWidth - (StartWidth + 59)));
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void UpdateDefenseBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(StartWidth + 4, StartHeight + 9);
+            int defBarHalf = player.MaxDefense % 20 / 10;
+            int defBarFull = player.MaxDefense / 20;
+            if (showNewValue)
+            {
+                if (defBarHalf == 0 && defBarFull < 50)
+                {
+                    defBarHalf = 1;
+                }
+                else
+                {
+                    defBarFull++;
+                    defBarHalf = 0;
+                }
+            }
+
+            Console.Write("DEF|{0}{1}{2}|",
+                new string(':', defBarFull),
+                new string('.', defBarHalf),
+                new string(' ', 50 - defBarFull - defBarHalf));
+
+            if (showNewValue)
+            {
+                if (player.MaxDefense < MaxPossiblePlayerDEF)
+                {
+                    Console.Write("   {0} -> {1}", player.MaxDefense, player.MaxDefense + 10);
+                }
+                else
+                {
+                    Console.Write("   MAX");
+                }
+            }
+            else
+            {
+                Console.Write(new string(' ', EndWidth - (StartWidth + 59)));
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void UpdateAccuracyBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(StartWidth + 4, StartHeight + 11);
+            int accuracyBarHalf = player.MaxAccuracy % 4 / 2;
+            int accuracyBarFull = player.MaxAccuracy / 4;
+            if (showNewValue)
+            {
+                if (accuracyBarHalf == 0 && accuracyBarFull < 50)
+                {
+                    accuracyBarHalf = 1;
+                }
+                else
+                {
+                    accuracyBarFull++;
+                    accuracyBarHalf = 0;
+                }
+            }
+
+            Console.Write("ACC|{0}{1}{2}|",
+                new string(':', accuracyBarFull),
+                new string('.', accuracyBarHalf),
+                new string(' ', 50 - accuracyBarFull - accuracyBarHalf));
+
+            if (showNewValue)
+            {
+                if (player.MaxAccuracy < MaxPossiblePlayerACC)
+                {
+                    Console.Write("   {0} -> {1}", player.MaxAccuracy, player.MaxAccuracy + 2);
+                }
+                else
+                {
+                    Console.Write("   MAX");
+                }
+            }
+            else
+            {
+                Console.Write(new string(' ', EndWidth - (StartWidth + 59)));
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void UpdateCriticalChanceBar(IPlayer player, ConsoleColor color = ConsoleColor.White, bool showNewValue = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(StartWidth + 3, StartHeight + 13);
+            int critBarFull = player.CriticalChance / 2;
+            int critBarHalf = player.CriticalChance % 2;
+            if (showNewValue)
+            {
+                if (critBarHalf == 0 && critBarFull < 50)
+                {
+                    critBarHalf = 1;
+                }
+                else
+                {
+                    critBarFull++;
+                    critBarHalf = 0;
+                }
+            }
+
+            Console.Write("CRIT|{0}{1}{2}|",
+                new string(':', critBarFull),
+                new string('.', critBarHalf),
+                new string(' ', 50 - critBarFull - critBarHalf));
+
+            if (showNewValue)
+            {
+                if (player.CriticalChance < MaxPossiblePlayerCRIT)
+                {
+                    Console.Write("   {0} -> {1}", player.CriticalChance, player.CriticalChance + 1);
+                }
+                else
+                {
+                    Console.Write("   MAX");
+                }
+            }
+            else
+            {
+                Console.Write(new string(' ', EndWidth - (StartWidth + 59)));
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void LightUpHPBar(IPlayer player)
+        {
+            this.UpdateMPBar(player);
+            this.UpdateCriticalChanceBar(player);
+            this.DisplayBackButtonInIncreaseStatusScreen();
+            this.UpdateHPBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void LightUpMPBar(IPlayer player)
+        {
+            this.UpdateMPBar(player, ConsoleColor.Yellow, true);
+            this.UpdateAttackBar(player);
+            this.UpdateHPBar(player);
+        }
+
+        public void LightUpAttackBar(IPlayer player)
+        {
+            this.UpdateAttackBar(player, ConsoleColor.Yellow, true);
+            this.UpdateMPBar(player);
+            this.UpdateDefenseBar(player);
+        }
+
+        public void LightUpDefenseBar(IPlayer player)
+        {
+            this.UpdateAttackBar(player);
+            this.UpdateAccuracyBar(player);
+            this.DisplayBackButtonInIncreaseStatusScreen();
+            this.UpdateDefenseBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void LightUpAccuracyBar(IPlayer player)
+        {
+            this.UpdateDefenseBar(player);
+            this.UpdateCriticalChanceBar(player);
+            this.DisplayBackButtonInIncreaseStatusScreen();
+            this.UpdateAccuracyBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void LightUpCriticalChanceBar(IPlayer player)
+        {
+            this.UpdateAccuracyBar(player);
+            this.UpdateHPBar(player);
+            this.DisplayBackButtonInIncreaseStatusScreen();
+            this.UpdateCriticalChanceBar(player, ConsoleColor.Yellow, true);
+        }
+
+        public void LightUpBackButtonInIncreaseStatusScreen(IPlayer player)
+        {
+            this.UpdateCriticalChanceBar(player);
+            this.UpdateAccuracyBar(player);
+            this.DisplayBackButtonInIncreaseStatusScreen(ConsoleColor.Yellow, true);
         }
 
         public void LightUpFirstMagicToRob(IUnit monster)
@@ -211,6 +548,36 @@
             this.DisplayFifthMagicAttack(player);
 
             this.DisplaySixthMagicAttack(player, ConsoleColor.Yellow, true);
+        }
+
+        private void DisplayBackButtonInIncreaseStatusScreen(
+            ConsoleColor color = ConsoleColor.White,
+            bool showArrow = false)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(EndWidth - 7, EndHeight - 3);
+            Console.Write("+----+");
+            Console.SetCursorPosition(EndWidth - 7, EndHeight - 2);
+            Console.Write("|BACK|");
+            Console.SetCursorPosition(EndWidth - 7, EndHeight - 1);
+            Console.Write("+----+");
+
+            if (showArrow)
+            {
+                Console.SetCursorPosition(EndWidth - 8, EndHeight - 2);
+                Console.Write(">");
+                Console.SetCursorPosition(EndWidth - 1, EndHeight - 2);
+                Console.Write("<");
+            }
+            else
+            {
+                Console.SetCursorPosition(EndWidth - 8, EndHeight - 2);
+                Console.Write(" ");
+                Console.SetCursorPosition(EndWidth - 1, EndHeight - 2);
+                Console.Write(" ");
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private void DisplayStats(IPlayer player)

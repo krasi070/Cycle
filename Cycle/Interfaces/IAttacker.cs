@@ -4,7 +4,7 @@
 
     public interface IAttacker : IDamageDoable
     {
-        int MaxDamage { get; }
+        int MaxDamage { get; set; }
 
         int BattleDamage { get; set; }
 

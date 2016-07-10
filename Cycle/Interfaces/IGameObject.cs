@@ -2,13 +2,9 @@
 {
     using System;
 
-    public interface IGameObject
+    public interface IGameObject : IPoint2D
     {
         string Name { get; }
-
-        int X { get; set; }
-
-        int Y { get; set; }
 
         ConsoleColor Color { get; set; }
     }
