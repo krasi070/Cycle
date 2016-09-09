@@ -1,0 +1,26 @@
+HEAL MAGIC (acc = 100):
+	Photosynthesis (HP + 20; MP = 4)
+	Mr. Injection (HP + 50; MP = 10)
+	Sun Energy (HP + 100; MP = 16)
+	Self Regen (HP + 1000; MP = 22)
+LIFE STEAL MAGIC:
+	Life Steal (Damage/HP = 22; acc = 95; MP = 9)
+	Bloodsucker (Damage/HP = 60; acc = 95; MP = 20)
+ATTACK BUFF MAGIC (acc = 100):
+	Zoom Punch (amount = 10; MP = 3)
+	Bullet Punch (amount = 25; MP = 5)
+	Giga Punch (amount = 80; MP = 12)
+DEFENSE BUFF MAGIC (acc = 100):
+	Harden (amount = 20; MP = 3)
+	Wall Maker (amount = 60; MP = 9)
+	Trimour (amount = 115; MP = 15)
+ACCURACY BUFF MAGIC (acc = 100):
+	Spectacle (amount = 8; MP = 3)
+	Concentrate (amount = 20; MP = 5)
+	Hawkeye (amount = 35; MP = 10)
+CRITICAL CHANCE BUFF MAGIC (acc = 100):
+	Critical Point (amount = 5; MP = 2)
+	Roll The Dice (amount = 18; MP = 5)
+	Back Attack (amount = 30; MP = 10)
+
+	

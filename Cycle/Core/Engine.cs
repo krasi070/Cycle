@@ -181,6 +181,7 @@
                     if (collideWithMonster)
                     {
                         this.StartBattleMode(player, monster, area);
+                        this.Battle(player, monster, area);
                     }
 
                     if (pressedKey == IncreaseStatusKey)
@@ -293,6 +294,26 @@
             this.menuHandler.DisplayMonster(monster);
             this.menuHandler.UpdateMonsterStatus(monster);
             this.menuHandler.DisplayBattleOptions();
+        }
+
+        private void Battle(IPlayer player, IMonster monster, IArea area)
+        {
+            var battleOption = this.menuHandler.ChooseBattleOption();
+            switch (battleOption)
+            {
+                case Option.First:
+                    // Attack
+                    break;
+                case Option.Second:
+                    // Magic
+                    break;
+                case Option.Third:
+                    // Magic Rober
+                    break;
+                case Option.Fourth:
+                    // Show status
+                    break;
+            }
         }
 
         private void OpenIncreaseStatusScreen(
